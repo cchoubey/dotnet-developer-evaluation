@@ -2,10 +2,9 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/dotnet-developer-evaluation/DesignTimeBuild
-/.vs/dotnet-developer-evaluation/FileContentIndex
-/.vs/dotnet-developer-evaluation/v17
 /.vs
-/bin/Debug/net8.0
-/obj
-*.user
+/dotnet-developer-evaluation/.vs
+/dotnet-developer-evaluation/bin/Debug/net8.0
+/dotnet-developer-evaluation/obj
+/dotnet-developer-evaluation_test/bin/Debug/net8.0
+/dotnet-developer-evaluation_test/obj
