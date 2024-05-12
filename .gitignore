@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/dotnet-developer-evaluation/DesignTimeBuild
+/.vs/dotnet-developer-evaluation/FileContentIndex
+/.vs/dotnet-developer-evaluation/v17
+/.vs
+/bin/Debug/net8.0
+/obj
+*.user
