@@ -15,10 +15,10 @@ var app = builder.Build();
 
 app.MapCompaniesApi();
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"));
-}
+//}
 
 app.Run();
