@@ -1,5 +1,4 @@
-﻿using dotnet_developer_evaluation.Models;
-using System.Net;
+﻿using System.Net;
 
 namespace dotnet_developer_evaluation
 {
@@ -7,9 +6,13 @@ namespace dotnet_developer_evaluation
     {
         public HttpStatusCode statusCode { get; private set; }
         private readonly HttpClient _httpClient;
-        public Service(HttpClient httpClient)
+        public Service(IConfiguration configuration)
         {
-            _httpClient = httpClient;
+            var baseUrl = configuration.GetValue<string>("baseUrl") ?? "";
+            _httpClient = new HttpClient
+            {
+                BaseAddress = new Uri(baseUrl)
+            };
         }
         public async Task<string?> GetCompanyById(int id)
         {

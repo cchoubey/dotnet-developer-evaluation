@@ -24,6 +24,9 @@ jobs:
       - name: Build
         run: dotnet build ./dotnet-developer-evaluation.sln --configuration Release --no-restore
 
+      - name: Test
+        run: dotnet test
+
       - name: Publish
         run: dotnet publish ./dotnet-developer-evaluation.sln --configuration Release --no-build
         

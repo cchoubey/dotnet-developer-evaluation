@@ -9,14 +9,10 @@ namespace dotnet_developer_evaluation.Repositories
 {
     public class CompanyRepository
     {
-        //private readonly string _baseUrl;
         private readonly IService _service;
-        public CompanyRepository(IConfiguration configuration)
+        public CompanyRepository(IService service)
         {
-            var baseUrl = configuration.GetValue<string>("baseUrl") ?? "";
-            var client = new HttpClient();
-            client.BaseAddress = new Uri(baseUrl);
-            _service = new Service(client);
+            _service = service;
         }
 
         public async Task<(Company?, HttpStatusCode)> GetById(int id)

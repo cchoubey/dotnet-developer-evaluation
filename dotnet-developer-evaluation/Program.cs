@@ -1,7 +1,9 @@
+using dotnet_developer_evaluation;
 using dotnet_developer_evaluation.ApiExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.UseCompaniesApi();
+builder.Services.AddSingleton<IService, Service>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
