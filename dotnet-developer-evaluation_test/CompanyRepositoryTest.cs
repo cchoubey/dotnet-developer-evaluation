@@ -2,7 +2,6 @@ using dotnet_developer_evaluation;
 using dotnet_developer_evaluation.Models;
 using dotnet_developer_evaluation.Repositories;
 using Moq;
-using System.Text;
 
 namespace dotnet_developer_evaluation_test
 {
@@ -12,7 +11,8 @@ namespace dotnet_developer_evaluation_test
         public async void Returns_404_When_id_not_found()
         {
             var service = new Mock<IService>();
-            service.Setup(d => d.GetCompanyById(It.IsAny<int>())).Returns(Task.FromResult<string?>(null));
+            MemoryStream? stream = null;
+            service.Setup(d => d.GetCompanyById(It.IsAny<int>())).Returns(Task.FromResult<Stream>(stream));
             service.Setup(d => d.statusCode).Returns(System.Net.HttpStatusCode.NotFound);
 
             var companyRepository = new CompanyRepository(service.Object);
@@ -40,9 +40,8 @@ namespace dotnet_developer_evaluation_test
             xmlSerializer.Serialize(memoryStream, company);
 
             memoryStream.Position = 0;
-            var reader = new StreamReader(memoryStream, Encoding.UTF8);
 
-            service.Setup(d => d.GetCompanyById(It.IsAny<int>())).Returns(Task.FromResult<string?>(reader.ReadToEnd()));
+            service.Setup(d => d.GetCompanyById(It.IsAny<int>())).Returns(Task.FromResult<Stream>(memoryStream));
             service.Setup(d => d.statusCode).Returns(System.Net.HttpStatusCode.OK);
             var companyRepository = new CompanyRepository(service.Object);
 
@@ -62,8 +61,8 @@ namespace dotnet_developer_evaluation_test
         {
             //setup
             var service = new Mock<IService>();
-
-            service.Setup(d => d.GetCompanyById(It.IsAny<int>())).Returns(Task.FromResult<string?>(null));
+            MemoryStream? stream = null;
+            service.Setup(d => d.GetCompanyById(It.IsAny<int>())).Returns(Task.FromResult<Stream>(stream));
             service.Setup(d => d.statusCode).Returns(System.Net.HttpStatusCode.InternalServerError);
             var companyRepository = new CompanyRepository(service.Object);
 

@@ -7,6 +7,6 @@ namespace dotnet_developer_evaluation
         HttpStatusCode statusCode { get; }
         string reasonPhrase { get; }
 
-        Task<string?> GetCompanyById(int id);
+        Task<Stream> GetCompanyById(int id);
     }
 }

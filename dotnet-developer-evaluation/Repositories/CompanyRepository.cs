@@ -21,12 +21,10 @@ namespace dotnet_developer_evaluation.Repositories
         {
             var response = await _service.GetCompanyById(id);
 
-            if (!string.IsNullOrWhiteSpace(response)) 
+            if (response != null) 
             {
                 var serializer = new XmlSerializer(typeof(Company));
-                var byteArray = Encoding.UTF8.GetBytes(response);
-                var stream = new MemoryStream(byteArray);
-                var company = (Company?)serializer.Deserialize(stream);
+                var company = (Company?)serializer.Deserialize(response);
                 return (company, _service.statusCode);
             }
             else

@@ -5,7 +5,7 @@ namespace dotnet_developer_evaluation
     public class Service : IService
     {
         public HttpStatusCode statusCode { get; private set; }
-        public string reasonPhrase { get; private set; }
+        public string? reasonPhrase { get; private set; }
         private readonly HttpClient _httpClient;
         public Service(IConfiguration configuration)
         {
@@ -15,15 +15,15 @@ namespace dotnet_developer_evaluation
                 BaseAddress = new Uri(baseUrl)
             };
         }
-        public async Task<string?> GetCompanyById(int id)
+        public async Task<Stream> GetCompanyById(int id)
         {
-            string? responseData = null;
+            Stream? responseData = null;
             var response = await _httpClient.GetAsync($"{id}.xml");
             statusCode = response.StatusCode;
             reasonPhrase = response.ReasonPhrase;
             if (response.IsSuccessStatusCode)
             {
-                responseData = await response.Content.ReadAsStringAsync();
+                responseData = await response.Content.ReadAsStreamAsync();
             }
             return responseData;
         }
