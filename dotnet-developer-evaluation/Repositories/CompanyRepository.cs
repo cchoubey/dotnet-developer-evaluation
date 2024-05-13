@@ -19,24 +19,34 @@ namespace dotnet_developer_evaluation.Repositories
 
         public async Task<(object?, HttpStatusCode)> GetById(int id)
         {
-            var response = await _service.GetCompanyById(id);
-
-            if (response != null) 
+            try
             {
-                var serializer = new XmlSerializer(typeof(Company));
-                var company = (Company?)serializer.Deserialize(response);
-                return (company, _service.statusCode);
+                var response = await _service.GetCompanyById(id);
+                if (response != null)
+                {
+                    var serializer = new XmlSerializer(typeof(Company));
+                    var company = (Company?)serializer.Deserialize(response);
+                    return (company, _service.statusCode);
+                }
+                else
+                {
+                    var errorObj = new Error
+                    {
+                        error = _service.statusCode.ToString(),
+                        error_description = _service.reasonPhrase
+                    };
+                    return (errorObj, _service.statusCode);
+                }
             }
-            else
+            catch (Exception ex)
             {
                 var errorObj = new Error
                 {
-                    error = _service.statusCode.ToString(),
-                    error_description = _service.reasonPhrase
+                    error = HttpStatusCode.InternalServerError.ToString(),
+                    error_description = ex.Message
                 };
-                return (errorObj, _service.statusCode);
-            }
-           
+                return (errorObj, HttpStatusCode.InternalServerError);
+            }           
         }
     }
 }
