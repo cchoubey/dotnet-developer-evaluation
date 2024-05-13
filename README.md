@@ -8,3 +8,5 @@ path:
 Reads the xml file, serializes the xml object into json and data and returned.
 
 It is hosted on azure. with contonuous integration and development. 
+
+It can be accessed at https://get-company-data.azurewebsites.net/swagger/
