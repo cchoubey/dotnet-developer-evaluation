@@ -3,6 +3,8 @@ using Microsoft.VisualBasic;
 using System.Collections;
 using System.Net;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Xml.Serialization;
 
 namespace dotnet_developer_evaluation.Repositories
@@ -15,7 +17,7 @@ namespace dotnet_developer_evaluation.Repositories
             _service = service;
         }
 
-        public async Task<(Company?, HttpStatusCode)> GetById(int id)
+        public async Task<(object?, HttpStatusCode)> GetById(int id)
         {
             var response = await _service.GetCompanyById(id);
 
@@ -27,7 +29,16 @@ namespace dotnet_developer_evaluation.Repositories
                 var company = (Company?)serializer.Deserialize(stream);
                 return (company, _service.statusCode);
             }
-            return (null, _service.statusCode);
+            else
+            {
+                var errorObj = new Error
+                {
+                    error = _service.statusCode.ToString(),
+                    error_description = _service.reasonPhrase
+                };
+                return (errorObj, _service.statusCode);
+            }
+           
         }
     }
 }

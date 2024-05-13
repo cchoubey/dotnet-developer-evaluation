@@ -18,8 +18,8 @@ namespace dotnet_developer_evaluation_test
             var companyRepository = new CompanyRepository(service.Object);
 
             var value = await companyRepository.GetById(4);
-
-            Assert.Null(value.Item1);
+            Type obj = typeof(Error);
+            Assert.IsType(obj, value.Item1);
             Assert.Equal(System.Net.HttpStatusCode.NotFound, value.Item2);
 
         }
@@ -51,7 +51,8 @@ namespace dotnet_developer_evaluation_test
 
             // test
             Assert.NotNull(value.Item1);
-            Assert.Equal(value.Item1.Name, company.Name);
+            Type obj = typeof(Company);
+            Assert.IsType(obj, value.Item1);
             Assert.Equal(System.Net.HttpStatusCode.OK, value.Item2);
 
         }

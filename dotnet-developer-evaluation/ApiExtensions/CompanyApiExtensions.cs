@@ -16,15 +16,10 @@ namespace dotnet_developer_evaluation.ApiExtensions
         {
             app.MapGet("/companies/{id:int}", async(int id, CompanyRepository repository) =>
             {
-
-                (Company?, HttpStatusCode) value = await repository.GetById(id);
-                if (value.Item1 == null)
+                (object?, HttpStatusCode) value = await repository.GetById(id);
+                if (value.Item2 != HttpStatusCode.OK)
                 {
-                    if (value.Item2 == HttpStatusCode.NotFound)
-                    {
-                        return Results.NotFound();
-                    }
-                    return Results.Problem(null, null, (int)value.Item2, value.Item2.ToString(), null, null);
+                    return Results.NotFound(value.Item1);
                 }
                 return Results.Ok(value.Item1);
             });
